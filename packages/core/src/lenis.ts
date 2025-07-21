@@ -13,7 +13,7 @@ import type {
   VirtualScrollCallback,
   VirtualScrollData,
 } from './types'
-import { VirtualScroll } from './virtual-scroll'
+import { WheelVirtualScroll, TouchVirtualScroll } from './virtual-scroll'
 
 // Technical explanation
 // - listen to 'wheel' events
@@ -87,7 +87,8 @@ export class Lenis {
   private readonly emitter = new Emitter()
   // These are instanciated in the constructor as they need information from the options
   readonly dimensions: Dimensions // This is not private because it's used in the Snap class
-  private readonly virtualScroll: VirtualScroll
+  private readonly wheelVirtualScroll: WheelVirtualScroll
+  private readonly touchVirtualScroll: TouchVirtualScroll
 
   constructor({
     wrapper = window,
@@ -188,12 +189,16 @@ export class Lenis {
       false
     )
 
-    // Setup virtual scroll instance
-    this.virtualScroll = new VirtualScroll(eventsTarget as HTMLElement, {
-      touchMultiplier,
+    // Setup virtual scroll instances
+    this.wheelVirtualScroll = new WheelVirtualScroll(eventsTarget as HTMLElement, {
       wheelMultiplier,
     })
-    this.virtualScroll.on('scroll', this.onVirtualScroll)
+    this.touchVirtualScroll = new TouchVirtualScroll(eventsTarget as HTMLElement, {
+      touchMultiplier,
+    })
+
+    this.wheelVirtualScroll.on('virtual-scroll', this.onVirtualScroll)
+    this.touchVirtualScroll.on('virtual-scroll', this.onVirtualScroll)
 
     if (this.options.autoToggle) {
       this.rootElement.addEventListener('transitionend', this.onTransitionEnd, {
@@ -236,7 +241,8 @@ export class Lenis {
       )
     }
 
-    this.virtualScroll.destroy()
+    this.wheelVirtualScroll.destroy()
+    this.touchVirtualScroll.destroy()
     this.dimensions.destroy()
 
     this.cleanUpClassName()
