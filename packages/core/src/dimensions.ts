@@ -1,4 +1,4 @@
-import { debounce } from './debounce'
+import { debounce } from './utils/debounce'
 
 /**
  * Dimensions class to handle the size of the content and wrapper

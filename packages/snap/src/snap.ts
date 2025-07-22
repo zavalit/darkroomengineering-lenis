@@ -1,6 +1,6 @@
 import type Lenis from 'lenis'
 import type { UserData } from 'lenis'
-import { debounce } from './debounce'
+import { debounce } from 'lenis/utils/debounce'
 import type { SnapElementOptions } from './element'
 import { SnapElement } from './element'
 import type { SnapItem, SnapOptions } from './types'
@@ -9,7 +9,7 @@ import { uid } from './uid'
 
 // TODO:
 // - horizontal
-// - fix trackpad snapping too soon due to velocity (fuck Apple)
+// - fix trackpad snapping too soon due to velocity
 // - fix wheel scrolling after limits (see console scroll to)
 // - fix touch scroll, do not snap when not released
 // - arrow, spacebar
