@@ -2,3 +2,4 @@
 export { Lenis as default } from './src/lenis'
 export * from './src/types'
 export { WheelVirtualScroll, TouchVirtualScroll } from './src/virtual-scroll'
+export { debounce } from './src/utils/debounce'
